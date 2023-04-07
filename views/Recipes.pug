@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  - var Recipes=[{recipes_name:"fish fry",recipes_qunatity:"10",recipes_price:1500},{recipes_name:"palak paneer",recipes_qunatity:"15",recipes_price:1200},{recipes_name:"chicken tikka",recipes_qunatity:"20",recipes_price:1700}]
+  div(class="container-fluid")
+  div(class="row")
+   each s,index  in Recipes
+    div(class="col-sm-2" onclick =`buy(${index})`) #{s.recipes_name}, #{s.recipes_qunatity}, #{s.recipes_price}
+    script.
+        function buy(a)
+        {
+            alert(`You purchased Item ${a+1}`)
+        }
