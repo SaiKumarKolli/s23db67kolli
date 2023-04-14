@@ -5,10 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 require('dotenv').config();
-const connectionString =
-process.env.MONGO_CON
+const connectionString = process.env.MONGO_CON
 mongoose = require('mongoose');
-mongoose.connect(connectionString,
+mongoose.connect('mongodb+srv://saikumarchaudarykolli:saikumar123@cluster0.9x3xfpv.mongodb.net/?retryWrites=true&w=majority',
 {useNewUrlParser: true,
 useUnifiedTopology: true});
 
@@ -19,6 +18,7 @@ var RecipesRouter = require('./routes/Recipes');
 var boardRouter = require('./routes/board');
 var selectorRouter = require('./routes/selector');
 var Recipes = require('./models/Recipes');
+var recourceRouter = require('./routes/resource');
 
 //Get the default connection
 var db = mongoose.connection;
@@ -71,6 +71,7 @@ app.use('/users', usersRouter);
 app.use('/Recipes', RecipesRouter);
 app.use('/board', boardRouter);
 app.use('/selector', selectorRouter);
+app.use('/resource', recourceRouter);
 
 
 

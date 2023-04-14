@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 const RecipesSchema = mongoose.Schema({
-costume_type: String,
-size: String,
-cost: Number
+    recipes_name: String,
+    recipes_qunatity: String,
+    recipes_price: Number
 })
 module.exports = mongoose.model("Recipes",
-RecipesSchema)
+    RecipesSchema)
