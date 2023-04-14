@@ -65,3 +65,40 @@ exports.Recipes_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
    };
+
+
+   // for a specific Costume.
+exports.Recipes_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await Recipes.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
+    
+
+    exports.Recipes_update_put = async function(req, res) {
+        console.log(`update on id ${req.params.id} with body
+        ${JSON.stringify(req.body)}`)
+        try {
+        let toUpdate = await Recipes.findById( req.params.id)
+        // Do updates of properties
+        if(req.body.recipes_name)
+        toUpdate.recipes_name = req.body.recipes_name;
+        if(req.body.recipes_qunatity) toUpdate.recipes_qunatity = req.body.recipes_qunatity;
+        if(req.body.recipes_price) toUpdate.recipes_price = req.body.recipes_price;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+        } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id}
+        failed`);
+        }
+        };
+        
+
+        
