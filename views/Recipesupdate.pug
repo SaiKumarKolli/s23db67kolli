@@ -1,0 +1,40 @@
+extends layout
+block content
+  h1= title
+  - let Recipesid = toShow._id
+  - let recipes_name = toShow.recipes_name
+  - let recipes_qunatity = toShow.recipes_qunatity
+  - let recipes_price = toShow.recipes_price
+
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{Recipesid}
+  - let actionid = "/resource/Recipes/" + Recipesid
+  form(id='RecipesForm', action= actionid, method="PUT")
+    div.form-group
+      label.costumeAttr(for='recipes_name') Recipes type
+      input#recipes_name(type='text', name='recipes_name', value= recipes_name )
+    div.form-group
+      label.costumeAttr(for='recipes_qunatity') Recipes quantity
+      input#recipes_qunatity(type='text', name='recipes_qunatity', value= recipes_qunatity )
+    div.form-group
+      label.RecipesAttr(for='recipes_price') Recipes Price
+      input#recipes_price(type='number', name='recipes_price', value= recipes_price )
+    input(type="submit")
+  script.
+    document.forms['RecipesForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+    });

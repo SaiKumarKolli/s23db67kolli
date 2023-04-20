@@ -1,0 +1,50 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let Recipesid = toShow._id
+    - let recipes_name = toShow.recipes_name
+    - let recipes_qunatity = toShow.recipes_qunatity
+    - let recipes_price = toShow.recipes_price
+    - let actionid = "/resource/Recipes/" + Recipesid
+    script.
+      let actionid = "#{actionid}"
+    div
+      div.row
+        div(class='RecipesAttr mr-3') Recipes ID is:
+        div #{Recipesid}
+      div.row
+        div(class='RecipesAttr mr-3') Recipes name is:
+        div #{recipes_name}
+      div.row
+        div(class='RecipesAttr mr-3') Recipes Quantity is:
+        div #{recipes_qunatity}
+      div.row
+        div(class='RecipesAttr mr-3') Recipes Price is:
+        div #{recipes_price}
+      button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+      button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    script.
+      function cancel() {
+        // Go back to the home page for the costume collection
+        window.location.href='/Recipes'
+      }
+    script.
+      function deleteOnid() {
+        console.log("starting delete")
+        // delete first
+        fetch(actionid, {
+          method: 'DELETE' // Don't need a body for the delete
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Delete succeeded")
+          window.location.href='/Recipes'
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Delete failed " + error)
+        });
+      }

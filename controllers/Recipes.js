@@ -99,6 +99,74 @@ exports.Recipes_detail = async function(req, res) {
         failed`);
         }
         };
+
+        // Handle Costume delete on DELETE.
+exports.Recipes_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await Recipes.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+   };
+
+
+   // Handle a show one view with id specified by query
+exports.Recipes_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await Recipes.findById( req.query.id)
+    res.render('Recipesdetail',
+   { title: 'Recipes Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+
+
+   exports.Recipes_create_Page = function(req, res) {
+    console.log("create view")
+    try{
+    res.render('Recipescreate', { title: 'Recipes Create'});
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+
+
+    exports.Recipes_update_Page = async function(req, res) {
+        console.log("update view for item "+req.query.id)
+        try{
+        let result = await Recipes.findById(req.query.id)
+        res.render('Recipesupdate', { title: 'Recipes Update', toShow: result });
+        }
+        catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+        }
+       };
+
+
+       exports.Recipes_delete_Page = async function(req, res) {
+        console.log("Delete view for id " + req.query.id)
+        try{
+        result = await Recipes.findById(req.query.id)
+        res.render('Recipesdelete', { title: 'Recipes Delete', toShow:
+       result });
+        }
+        catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+        }
+       };
+    
         
 
         

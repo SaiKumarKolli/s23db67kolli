@@ -1,0 +1,31 @@
+extends layout
+block content
+  h1= title
+  form(id='RecipesForm', action="/resource/Recipes", method="POST")
+    div.form-group
+      label.RecipesAttr(for='recipes_name') Recipes name
+      input#recipes_name(type='text', name='recipes_name')
+    div.form-group
+      label.RecipesAttr(for='recipes_qunatity') recipes_qunatity
+      input#recipes_qunatity(type='text', name='recipes_qunatity')
+    div.form-group
+      label.RecipesAttr(for='recipes_price') recipes_price
+      input#recipes_price(type='number', name='recipes_price')
+    input(type="submit")
+  script.
+    document.forms['RecipesForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Save succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Save failed " + error )
+      });
+    });
