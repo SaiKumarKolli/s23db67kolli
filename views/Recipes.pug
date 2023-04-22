@@ -1,14 +1,39 @@
+//- extends layout
+
+//- block content
+//-   h1= title
+//-   - let items = results;
+//-   div(class="container-fluid")
+//-     div(class="row m-1")
+//-       each k,index in items
+//-         - let destination = `dispatch(\"/cars/update?id=${k._id}\")`
+//-         div(class="row-sm-2", class="m-1") 
+//-             Item #{k.recipes_name}(#{k.recipes_qunatity}) is #{k.recipes_price}
+//-             button.btn(class="btn-primary ml-1", onclick= destination) Update
+
+//-   script.
+//-     function buy(param) {
+//-       console.log(param);
+//-     }
+
+//-   script.
+//-     function dispatch(path){
+//-       window.location.href=path
+//-     } 
+
 extends layout
 
 block content
   h1= title
-  - var Recipes=[{recipes_name:"fish fry",recipes_qunatity:"10",recipes_price:1500},{recipes_name:"palak paneer",recipes_qunatity:"15",recipes_price:1200},{recipes_name:"chicken tikka",recipes_qunatity:"20",recipes_price:1700}]
+  -let items = results
   div(class="container-fluid")
-  div(class="row")
-   each s,index  in Recipes
-    div(class="col-sm-2" onclick =`buy(${index})`) #{s.recipes_name}, #{s.recipes_qunatity}, #{s.recipes_price}
-    script.
-        function buy(a)
-        {
-            alert(`You purchased Item ${a+1}`)
-        }
+   div(class="row m-1")
+    each item in items
+     - let destination = `dispatch(\"/Recipes/update?id=${item._id}\")`
+     div(class="row-sm-2", class="m-1") Item #{item.recipes_name}(#{item.recipes_qunatity}) is #{item.recipes_price}
+      button.btn( class="btn-primary ml-1", onclick= destination) Update
+
+  script.
+   function dispatch(path){
+     window.location.href=path
+   }
